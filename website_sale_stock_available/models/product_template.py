@@ -12,14 +12,22 @@ class ProductTemplate(models.Model):
         combination=False,
         product_id=False,
         add_qty=1.0,
-        parent_combination=False,
         only_template=False,
+        **kwargs
     ):
+        """Override to add website_sale_stock_available context.
+
+        Note: In Odoo 19, 'parent_combination' parameter doesn't exist,
+        so we capture it in **kwargs but don't pass it to the parent.
+        """
+        # Remove parent_combination if it exists (from legacy code)
+        kwargs.pop('parent_combination', None)
+
         template = self.with_context(website_sale_stock_available=True)
         return super(ProductTemplate, template)._get_combination_info(
             combination=combination,
             product_id=product_id,
             add_qty=add_qty,
-            parent_combination=parent_combination,
             only_template=only_template,
+            **kwargs
         )
