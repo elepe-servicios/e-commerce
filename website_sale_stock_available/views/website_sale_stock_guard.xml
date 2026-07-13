@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+    Defensive UI patch: ensure the container expected by website_sale_stock
+    exists in product page templates.
+    -->
+    <template id="website_sale_product_availability_messages_guard"
+              inherit_id="website_sale.product"
+              priority="9999">
+        <!--
+        Use a stable anchor that exists in website_sale.product across versions.
+        The previous form[hasclass('js_main_product')] selector is not present
+        in this DB/template chain and caused ParseError at install time.
+        -->
+        <xpath expr="//input[@name='product_id']" position="after">
+            <div class="availability_messages"/>
+        </xpath>
+    </template>
+</odoo>
