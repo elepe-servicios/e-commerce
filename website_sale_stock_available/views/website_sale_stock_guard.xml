@@ -16,4 +16,6 @@
             <div class="availability_messages"/>
         </xpath>
     </template>
+
+
 </odoo>
